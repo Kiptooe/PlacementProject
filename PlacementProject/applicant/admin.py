@@ -1,3 +1,7 @@
 from django.contrib import admin
+from .models import Applicant, MinistryType, Ministry
 
-# Register your models here.
+
+admin.site.register(Applicant)
+admin.site.register(Ministry)
+admin.site.register(MinistryType)
