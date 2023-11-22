@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="px-2 py-3">
+    <h6 class="float-start">Dashboard</h6>
+    <a class="px-2  float-end bg-secondary text-white text-decoration-none" type="button" href="{% url 'logout' %}"> <i class="fa-solid fa-lock" style="color: #ffffff;"></i> LOGOUT</a>
+</div>
+   <div class="row text-styles">
+       <div class="col-md-6 col-xs-12">
+            <div class="bg-white p-5 m-3" style="font-size: 15px;" >
+                <h4 class="box-title">Student Details</h4>
+                <div class="row">
+                    <div class="col-md-4 ">
+                        <p class="text-primary" style="--bs-text-opacity: 0.75;">NAME</p>
+                        <p>{{firstname}}  {{secondname}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p class="text-primary" style="--bs-text-opacity: 0.75;">YEAR/INDEX NUMBER</p>
+                        <p>{{year}}/{{index}}</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-primary" style="--bs-text-opacity: 0.75;">GENDER</p>
+                        <p>{{gender}}</p>
+                    </div>
+                    <div class="col-md-2">
+                        <p class="text-primary" style="--bs-text-opacity: 0.75;">CITIZENSHIP</p>
+                        <p>{{citizenship}}</p>
+                    </div>
+                </div>
+                <hr>
+                <div class="text-primary text-center text-uppercase" style="--bs-text-opacity: 0.75;">{{highschool}}</div>
+            </div>
+        </div>    
+        <div class="col-md-6 col-xs-12">
+           <div class="text-white p-4 m-3" style="font-size: 15px; background-color: #4D5667;">
+               <h4 class="box-title text-white">KCSE RESULTS</h4>
+                   <div class="row">
+                       <div class="col-md-6 col-xs-6">
+                           <p class="text-custom text-center">MEAN GRADE</p>
+                           <p class="text-center">{{average_grade}}</p>
+                       </div>
+                       <div class="col-md-6 col-xs-6">
+                           <p class="text-custom text-center">AGP</p>
+                           <p class="text-center">{{average_mark}}</p>
+                       </div>
+                   </div>
+                   <hr>
+                   <div class="row">  
+                       <div class="col-md-2 hidden-xs hidden-sm"></div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject1}}</p>
+                               <p class="text-center">{{Result1}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject2}}</p>
+                               <p class="text-center">{{Result2}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject3}}</p>
+                               <p class="text-center">{{Result3}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject4}}</p>
+                               <p class="text-center">{{Result4}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject5}}</p>
+                               <p class="text-center">{{Result5}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject6}}</p>
+                               <p class="text-center">{{Result6}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject7}}</p>
+                               <p class="text-center">{{Result7}}</p>
+                           </div>
+                       
+                           <div class="col-md-1 col-xs-2 ">
+                               <p class="text-custom text-center">{{Subject8}}</p>
+                               <p class="text-center">{{Result8}}</p>
+                           </div>
+                       
+                   </div>
+               
+           </div>
+       </div>
+   </div>
+
+{% endblock %}

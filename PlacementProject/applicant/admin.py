@@ -87,6 +87,9 @@ class SubjectResultsAdmin(admin.ModelAdmin):
 class ApplicationAdmin(admin.ModelAdmin):
     list_display = ['Applicant_Id', 'Course_Id', 'Course_Rank', 'Payment_Id']
 
+class HighSchoolAdmin(admin.ModelAdmin):
+    list_display = ['Name']
+
 admin.site.register(InstitutionType, InstitutionTypeAdmin)
 admin.site.register(Ministry, MinistryAdmin)
 admin.site.register(Institution, InstitutionAdmin)
@@ -105,5 +108,6 @@ admin.site.register(MinSubjectCategory, MinSubjectCategoryAdmin)
 admin.site.register(SubjectCategory, SubjectCategoryAdmin)
 admin.site.register(User, UserAdmin)
 admin.site.register(Applicant, ApplicantAdmin)
+admin.site.register(HighSchool, HighSchoolAdmin)
 
 

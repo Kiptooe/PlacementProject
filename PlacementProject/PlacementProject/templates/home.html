@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="px-2 py-3">
+    <h6 class="float-start text-muted">Dashboard</h6>
+    <a class="px-2  float-end bg-secondary text-white text-decoration-none" type="button" href="{% url 'login' %}"> <i class="fa-solid fa-lock" style="color: #ffffff;"></i> LOGIN</a>
+</div>
+<hr>
+<div class="row text-styles">
+    <div class="col-md-12 col-lg-12 col-sm-12">
+        <div style="background-color: #ffffff; padding: 4px; margin-bottom:50px;">
+            <h6 class="mt-4 px-4">AVAILABLE LEARNING INSTITUTIONS AND PROGRAMMES</h6>
+            <div class="row px-4 py-4">
+                <div class="col-lg-2 col-sm-6 row-in-br">
+                    <div class="col-in row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3 class="counter text-success text-center" style="--bs-text-opacity: .85;">{{ public_count }}</h3>
+                            <p class="text-muted text-center">Public Universities - Eligible For Government Scholarship And HELB Loan</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-sm-6 row-in-br">
+                    <div class="col-in row">
+                        <div class="col-md-12 col-sm-12 col-xs-12">
+                            <h3 class="counter text-center" style="color: #FB9678;">{{ private_count }}</h3>
+                            <p class="text-muted text-danger text-center">Private Universities - Eligible For HELB Loan Only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>                
+{% endblock %}

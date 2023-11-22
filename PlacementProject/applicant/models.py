@@ -1,24 +1,48 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, Group, Permission
 
 
 class User(AbstractUser):
     is_applicant = models.BooleanField(default=False)
-    pass
+    
+    groups = models.ManyToManyField(Group, related_name='placeholder_user_groups')
+    user_permissions = models.ManyToManyField(Permission, related_name='placeholder_user_permissions')
 
 
 class Applicant(models.Model):
+
+    GENDER_CHOICES = [
+        ('M', "Male"),
+        ('F', "Female"),
+    ]
+
+    CITIZENSHIP_STATUS = [
+        ('C', "Citizen"),
+        ('NC', "Not Citizen"),
+    ]
     Id = models.BigAutoField(primary_key=True)
     Email = models.EmailField()
     Phone = models.PositiveIntegerField()
     KCSE_Index = models.PositiveIntegerField()
     Year = models.PositiveIntegerField()
-    # Birth_Certificate_No = models.PositiveIntegerField()
-    Applicant_id = models.ForeignKey("User", on_delete=models.CASCADE,
+    Gender = models.CharField(choices=GENDER_CHOICES, max_length=15)
+    Citizenship = models.CharField(choices=CITIZENSHIP_STATUS, max_length=15)
+    HighSchool_Id = models.ForeignKey("HighSchool", on_delete=models.CASCADE,
+    blank=True, null=True)
+    Birth_Certificate_No = models.PositiveIntegerField()
+    User_Id = models.ForeignKey("User", on_delete=models.CASCADE,
     null=True, blank=True)
 
-    def __str__(self) -> str:
-        return f"{self.KCSE_Index}"  
+    def __str__(self):
+        return f"{self.User_Id}"  
+
+
+class HighSchool(models.Model):
+    Id = models.BigAutoField(primary_key=True)
+    Name = models.CharField(max_length=200)
+
+    def __str__(self):
+        return f"{self.Name}"
 
 
 class Institution(models.Model):
@@ -139,12 +163,18 @@ class MainResults(models.Model):
     Average = models.IntegerField()
     Applicant_Id = models.ForeignKey("Applicant", on_delete=models.CASCADE, blank=True, null=True)
 
+    def __str__(self) -> str:
+        return f"{self.Grade_Id}"
+
 
 class SubjectResults(models.Model):
     Id = models.BigAutoField(primary_key=True)
     Applicant_Id = models.ForeignKey("Applicant", on_delete=models.CASCADE, blank=True, null=True)
     Subject_Id = models.ForeignKey("Subject", on_delete=models.CASCADE, blank=True, null=True)
     Grade_Id = models.ForeignKey("Grade", on_delete=models.CASCADE, blank=True, null=True)
+
+    def __str__(self) -> str:
+        return f"{self.Grade_Id}"
 
 
 class Application(models.Model):

@@ -1,0 +1,24 @@
+
+.nav-styles{
+background-color: #4D5667;
+color: #888B9C;
+}
+
+.nav-styles .navbar-nav .nav-item{
+padding-left: 8px;
+padding-top: 2px;
+padding-bottom: 2px;
+transition: background-color 0.3s;
+}
+
+.nav-styles .navbar-nav .nav-item:hover{
+background-color: #2E3038;
+}
+
+.nav-styles .navbar-nav .nav-item.active {
+border-bottom: 2px solid #FB9678;   
+}
+
+.text-custom {
+   color: #FB9678;
+}
