@@ -85,7 +85,7 @@ class SubjectResultsAdmin(admin.ModelAdmin):
     list_display = ['Applicant_Id', 'Subject_Id', 'Grade_Id']
 
 class ApplicationAdmin(admin.ModelAdmin):
-    list_display = ['Applicant_Id', 'Course_Id', 'Course_Rank', 'Payment_Id']
+    list_display = ['Applicant_Id', 'Course_Id', 'Course_Rank']
 
 class HighSchoolAdmin(admin.ModelAdmin):
     list_display = ['Name']
@@ -100,7 +100,7 @@ admin.site.register(ClusterSubjectCategory, ClusterSubjectCategoryAdmin)
 admin.site.register(Grade, GradeAdmin)
 admin.site.register(Application, ApplicationAdmin)
 admin.site.register(Basket, BasketAdmin)
-admin.site.register(Payment, PaymentAdmin)
+# admin.site.register(Payment, PaymentAdmin)
 admin.site.register(SubjectResults, SubjectResultsAdmin)
 admin.site.register(MainResults, MainResultsAdmin)
 admin.site.register(SubjectMinCategory, SubjectMinCategoryAdmin)

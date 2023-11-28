@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="px-2 py-3">
+    <h6 class="float-start text-muted">Program Choices</h6>
+    <a class="px-2  float-end bg-secondary text-white text-decoration-none" type="button" href="{% url 'logout' %}"> <i class="fa-solid fa-lock" style="color: #ffffff;"></i> LOGOUT</a>
+</div>
+<hr>
+
+<div class="bg-white p-3">
+    {% if not status %}
+    <a href="{% url 'apply' %}" class="btn border-bottom mb-2 text-white" style="background-color:#8F0F1D;"> APPLY NOW</a>
+    {% else %}
+    <a href="#" class="btn border-bottom mb-2 text-white" style="background-color: #8F0F1D;"> Revise NOW</a>    
+    {% endif %}
+</div>
+
+{% endblock %}

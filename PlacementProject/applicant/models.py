@@ -150,11 +150,11 @@ class MinSubjectCategory(models.Model):
     def __str__(self):
         return f"{self.Minimum_Subject_Category_Name}"
 
-class Payment(models.Model):
-    Id = models.BigAutoField(primary_key=True)
-    Applicant_Id = models.ForeignKey("Applicant", on_delete=models.CASCADE,
-    blank=True, null=True)
-    Payment_Code = models.CharField(max_length=100)
+# class Payment(models.Model):
+#     Id = models.BigAutoField(primary_key=True)
+#     Applicant_Id = models.ForeignKey("Applicant", on_delete=models.CASCADE,
+#     blank=True, null=True)
+#     Payment_Code = models.CharField(max_length=100)
 
 
 class MainResults(models.Model):
@@ -191,9 +191,9 @@ class Application(models.Model):
     Id = models.BigAutoField(primary_key=True)
     Applicant_Id = models.ForeignKey("Applicant", on_delete=models.CASCADE, blank=True, null=True)
     Course_Id = models.ForeignKey("Course", on_delete=models.CASCADE, blank=True, null=True)
-    Course_Rank = models.CharField(max_length=1, choices=COURSE_RANKS)
-    Payment_Id = models.ForeignKey("Payment", on_delete=models.CASCADE,
-    blank=True, null=True)
+    Course_Rank = models.IntegerField(choices=COURSE_RANKS)
+    # Payment_Id = models.ForeignKey("Payment", on_delete=models.CASCADE,
+    # blank=True, null=True)
 
 
 

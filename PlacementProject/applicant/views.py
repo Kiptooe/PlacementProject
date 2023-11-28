@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from .forms import LoginForm, CustomAuthenticationForm
-from .models import Institution, InstitutionType, Applicant, MainResults, SubjectResults
-from .functions import fetch_applicant_data
+from .forms import LoginForm, CustomAuthenticationForm, CourseForm
+from .models import Institution, InstitutionType, Applicant, MainResults, SubjectResults, Course, Application
+from .functions import fetch_applicant_data, is_ajax
+from django.http import JsonResponse
 
 def index(request):
     
@@ -69,3 +70,71 @@ def dashboard(request):
         applicant_data.update(average_results)
 
     return render(request, 'dashboard.html', applicant_data)
+
+def application(request):
+    applicant_id = request.session['applicant_data'].get('applicant_id')
+    applications = Application.objects.filter(Applicant_Id=applicant_id)
+    
+    applied = applications.exists()
+        
+    return render(request, 'application.html', {'status': applied})
+
+def apply(request):
+
+    if request.method == 'POST':
+        form = CourseForm(request.POST)
+        if form.is_valid():
+            applicant_id = request.session['applicant_data'].get('applicant_id')
+
+            applicant = Applicant.objects.get(pk=applicant_id)
+
+            course_codes = [
+                form.cleaned_data['first_course_code'],
+                form.cleaned_data['second_course_code'],
+                form.cleaned_data['third_course_code'],
+                form.cleaned_data['fourth_course_code'],
+                form.cleaned_data['fifth_course_code'],
+                form.cleaned_data['sixth_course_code'],
+            ]
+
+            valid_courses = Course.objects.filter(Course_Code__in=course_codes)
+            for rank, code in enumerate(course_codes, start=1):
+                try:
+                    course = valid_courses.get(Course_Code=code)
+                    course_object = Course.objects.get(pk=course.Id)        
+
+
+                    Application.objects.create(
+                        Applicant_Id=applicant,
+                        Course_Id=course_object,
+                        Course_Rank=rank
+                    )
+                except Course.DoesNotExist:
+                    print('Course Does not exist')
+            
+            return JsonResponse({'success': True})
+        else:
+            return JsonResponse({'success': False, 'errors': form.errors})
+    else:
+        course_form = CourseForm()
+
+    return render(request, 'apply.html', {'course_form': course_form})
+
+
+def fetch_course_details(request):
+    if is_ajax(request) and request.method == 'GET':
+        course_code = request.GET.get('course_code')
+        try:
+            course = Course.objects.get(Course_Code=course_code)
+            data = {
+                'course_name': course.Course_Name,
+                'institution_name': course.Institution_Id.Institution_Name
+            }
+        except Course.DoesNotExist:
+            print(course_code)
+            data = {'error':'Invalid code'}
+
+        return JsonResponse(data)
+    
+    return JsonResponse({'error': 'Invalid request'})
+

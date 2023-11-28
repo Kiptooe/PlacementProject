@@ -37,4 +37,7 @@ def fetch_applicant_data(sender, request, user, **kwargs):
         except Applicant.DoesNotExist:
             pass
 
-    
+
+def is_ajax(request):
+    return request.headers.get('x-requested-with') == 'XMLHttpRequest'
+

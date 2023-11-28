@@ -14,10 +14,10 @@
     <div class="container-fluid">
         {% load static %}
         <div class="row">
-            <div class="col-md-9 p-0 m-0">
+            <div class="col-md-8 p-0 m-0">
                 <img src="{% static 'images/loginpageimage.png' %}" class="img-fluid" alt="Image">
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <img src=" {% static 'images/kuccpsLOGO.png' %}" class="mx-auto d-block" alt="KUCCPS Logo" srcset="" width="244px" height="121px" >
                 <form class="mt-4" method="POST" action="{% url 'login' %}">
                     {% csrf_token %}
