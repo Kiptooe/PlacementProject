@@ -1,0 +1,38 @@
+<!-- Include Chart.js library -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- HTML canvas element where the chart will be displayed -->
+<canvas id="institutionDistributionChart" width="" height=""></canvas>
+
+<script>
+let publicCount = 0;
+let privateCount = 0;
+</script>
+
+<script>
+// Visualization 1: Institution Distribution (Pie Chart)
+publicCount = {{ public_count|safe }};
+privateCount = {{ private_count|safe }};
+
+var ctx1 = document.getElementById('institutionDistributionChart').getContext('2d');
+var institutionDistributionChart = new Chart(ctx1, {
+    type: 'pie',
+    data: {
+        labels: ['Public', 'Private'],
+        datasets: [{
+            label: 'Institution Distribution',
+            data: [publicCount ,privateCount ],
+            backgroundColor: [
+                'rgba(54, 162, 235, 0.7)',
+                'rgba(255, 99, 132, 0.7)'
+            ],
+            borderWidth: 1
+        }]
+    },
+    options: {
+     width: 30,
+     height: 30
+    }
+});
+
+</script>

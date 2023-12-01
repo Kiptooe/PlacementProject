@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Top Institutions</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="institutionChart" width="400" height="400"></canvas>
+
+    <script>
+        var institutionNames = {{ institution_names|safe }};
+        var applicantCounts = {{ applicant_counts|safe }};
+
+        var barColors = [
+            'rgba(255, 99, 132, 0.7)', // Red
+            'rgba(54, 162, 235, 0.7)', // Blue
+            'rgba(255, 206, 86, 0.7)', // Yellow
+            // Add more colors as needed for each course
+        ];
+
+
+        var ctx = document.getElementById('institutionChart').getContext('2d');
+        var institutionChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: institutionNames,
+                datasets: [{
+                    label: 'Applicant Count',
+                    data: applicantCounts,
+                    backgroundColor: barColors,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+                // Include any additional options for your chart here
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gender Distribution</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <canvas id="genderChart" width="100" height="100"></canvas>
+
+    <script>
+        var genders = {{ genders|safe }};
+        var counts = {{ counts|safe }};
+
+        var ctx = document.getElementById('genderChart').getContext('2d');
+        var genderChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: genders,
+                datasets: [{
+                    label: 'Gender Distribution',
+                    data: counts,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)', // Red for Female
+                        'rgba(54, 162, 235, 0.7)', // Blue for Male
+                        // You can add more colors for other genders if needed
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                // Include any additional options for your chart here
+            }
+        });
+    </script>
+</body>
+</html>

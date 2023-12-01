@@ -1,5 +1,7 @@
 from django.contrib import admin
 from .models import *
+from django.urls import reverse
+from django.utils.html import format_html
 # from django_otp.admin import OTPAdminSite
 # from django.contrib.auth.models import User, Group
 # from django_otp.plugins.otp_totp.models import TOTPDevice
@@ -37,19 +39,60 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ['first_name', 'last_name', 'is_applicant']
 
 class ApplicantAdmin(admin.ModelAdmin):
-    list_display = ['Email', 'Phone', 'KCSE_Index', 'Year']
+
+    def get_gender_distribution_link(self, obj):
+        
+        url = reverse('applicant:gender_distribution')
+        return format_html(' <a href="{}"> View Gender Distribution </a>', url)
+    
+
+    get_gender_distribution_link.short_description = 'Gender Distribution'
+
+    list_display = ['Email', 'Phone', 'KCSE_Index', 'Year', 'get_gender_distribution_link']
 
 class InstitutionAdmin(admin.ModelAdmin):
-    list_display = ['Institution_Name', 'Type_Id', 'Ministry_Id']
+   
+    def get_top_institution_distribution_link(self, obj):
+        url = reverse('applicant:top-institution-distribution')
+        return format_html(' <a href="{}"> View Institution Distribution </a>', url)
+    
+
+    get_top_institution_distribution_link.short_description = 'Top Institution Distribution'
+
+    list_display = ['Institution_Name', 'Type_Id', 'Ministry_Id', 'get_top_institution_distribution_link']
+
 
 class MinistryAdmin(admin.ModelAdmin):
     list_display = ['Ministry_Name']
 
 class InstitutionTypeAdmin(admin.ModelAdmin):
-    list_display = ['Type_Name']
+    
+    def get_institutions_distribution_link(self, obj):
+        url = reverse('applicant:institutions_distribution')
+        return format_html(' <a href="{}"> View Institutions Distribution by applicant </a>', url)
+    
+
+    get_institutions_distribution_link.short_description = 'Institutions Distribution by Applicants'
+
+
+    def get_institution_distribution_link(self, obj):
+        url = reverse('applicant:institution_distribution')
+        return format_html(' <a href="{}"> View Institution Distribution </a>', url)
+    
+
+    get_institution_distribution_link.short_description = 'Institution Distribution'
+
+    list_display = ['Type_Name', 'get_institutions_distribution_link', 'get_institution_distribution_link']
 
 class CourseAdmin(admin.ModelAdmin):
-    list_display = ['Course_Name', 'Cluster_Id', 'Institution_Id', 'Course_Code', 'Year_1_Course_Cost', 'Capacity']
+
+    def get_course_distribution_link(self, obj):
+        url = reverse('applicant:course_distribution')
+        return format_html(' <a href="{}"> View Course Distribution </a>', url)
+    
+    get_course_distribution_link.short_description = 'Course Distribution'
+
+    list_display = ['Course_Name', 'Cluster_Id', 'Institution_Id', 'Course_Code', 'Year_1_Course_Cost', 'Capacity', 'get_course_distribution_link']
 
 class ClusterAdmin(admin.ModelAdmin):
     list_display = ['Cluster_Name']

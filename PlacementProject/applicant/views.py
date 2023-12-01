@@ -4,6 +4,7 @@ from .forms import LoginForm, CustomAuthenticationForm, CourseForm
 from .models import Institution, InstitutionType, Applicant, MainResults, SubjectResults, Course, Application
 from .functions import fetch_applicant_data, is_ajax
 from django.http import JsonResponse
+from django.db.models import Count
 
 def index(request):
     
@@ -138,3 +139,63 @@ def fetch_course_details(request):
     
     return JsonResponse({'error': 'Invalid request'})
 
+def institution_distribution_view(request):
+    private_count = Institution.objects.filter(Type_Id__Type_Name='Private').count()
+    public_count = Institution.objects.filter(Type_Id__Type_Name='Public').count()
+
+    context = {
+        'private_count' : private_count,
+        'public_count' : public_count
+    }
+
+    return render(request, 'institution_distribution.html', context)
+
+
+def gender_distribution_view(request):
+    gender_counts = Applicant.objects.values('Gender').annotate(count=Count('Gender'))
+
+    genders = [entry['Gender'] for entry in gender_counts]
+    counts = [entry['count'] for entry in gender_counts]
+
+    return render(request, 'gender_distribution_chart.html', {
+        'genders': genders,
+        'counts': counts,
+    })
+
+def top_institution_view(request):
+    institutions = Institution.objects.annotate(applicant_count=Count('course__application'))
+
+    institution_names =[inst.Institution_Name for inst in institutions]
+    applicant_counts = [inst.applicant_count for inst in institutions]
+
+    return render(request, 'top_institutions.html', {
+        'institution_names': institution_names,
+        'applicant_counts': applicant_counts,
+    })
+
+def course_distribution_view(request):
+    courses = Course.objects.all()
+    course_names = [course.Course_Name for course in courses]
+    
+    applications = Application.objects.select_related('Course_Id').values('Course_Id__Course_Name').annotate(count=Count('Course_Id'))
+
+    # Create a dictionary to hold applicant counts for each course
+    applicant_counts = {course.Course_Name: 0 for course in courses}
+    for application in applications:
+        applicant_counts[application['Course_Id__Course_Name']] = application['count']
+
+    return render(request, 'course_distribution.html', {
+        'course_names': course_names,
+        'applicant_counts': list(applicant_counts.values()),  # Convert dict values to list
+    })
+
+def institutions_distribution_view(request):
+    institutions = Institution.objects.annotate(applicant_count=Count('course__application'))
+
+    institution_names = [inst.Institution_Name for inst in institutions]
+    applicant_counts = [inst.applicant_count for inst in institutions]
+
+    return render(request, 'institution_distribution.html', {
+        'institution_names': institution_names,
+        'applicant_counts': applicant_counts,
+    })
